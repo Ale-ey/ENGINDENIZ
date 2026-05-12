@@ -9,6 +9,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'silvioh22.sg-host.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

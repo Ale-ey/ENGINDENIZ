@@ -3,9 +3,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Phone, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const getLinkClasses = (path: string) => {
+    const isActive = pathname === path;
+    return `relative group transition-colors ${isActive ? "text-[#c31524] italic" : "text-black hover:text-[#c31524]"}`;
+  };
+
+  const getSpanClasses = (path: string) => {
+    const isActive = pathname === path;
+    return `absolute -bottom-1 left-0 h-[2px] bg-[#c31524] transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`;
+  };
 
   return (
     <>
@@ -58,32 +70,32 @@ export default function Header() {
               <Image src="/logo.svg" alt="Engin Deniz Logo" width={120} height={56} priority />
             </div>
             <nav className="hidden md:flex items-center space-x-8 text-[15px] font-medium text-black">
-              <a href="#" className="relative group text-[#c31524] italic">
+              <a href="/" className={getLinkClasses("/")}>
                 Law Firm
-                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-[#c31524]"></span>
+                <span className={getSpanClasses("/")}></span>
               </a>
-              <a href="#" className="relative group text-black hover:text-[#c31524] transition-colors">
+              <a href="/team" className={getLinkClasses("/team")}>
                 Team
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#c31524] transition-all duration-300 group-hover:w-full"></span>
+                <span className={getSpanClasses("/team")}></span>
               </a>
-              <a href="#" className="relative group text-black hover:text-[#c31524] transition-colors">
+              <a href="#" className={getLinkClasses("/real-estate")}>
                 Real Estate Law
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#c31524] transition-all duration-300 group-hover:w-full"></span>
+                <span className={getSpanClasses("/real-estate")}></span>
               </a>
-              <a href="#" className="relative group text-black hover:text-[#c31524] transition-colors">
+              <a href="#" className={getLinkClasses("/panorama")}>
                 Panorama
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#c31524] transition-all duration-300 group-hover:w-full"></span>
+                <span className={getSpanClasses("/panorama")}></span>
               </a>
-              <a href="#" className="relative group text-black hover:text-[#c31524] transition-colors">
+              <a href="#" className={getLinkClasses("/anniversary")}>
                 Anniversary
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#c31524] transition-all duration-300 group-hover:w-full"></span>
+                <span className={getSpanClasses("/anniversary")}></span>
               </a>
-              <a href="#" className="relative group text-black hover:text-[#c31524] transition-colors">
+              <a href="#" className={getLinkClasses("/contact")}>
                 Contact
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#c31524] transition-all duration-300 group-hover:w-full"></span>
+                <span className={getSpanClasses("/contact")}></span>
               </a>
             </nav>
-            <button className="hidden md:block bg-[#d71921] text-white px-6 py-2.5 rounded-full font-medium hover:bg-red-800 transition-colors text-sm">
+            <button className="font-display hidden md:block bg-[#d71921] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-red-800 transition-colors text-[15px]">
               Hire Us
             </button>
 
@@ -116,15 +128,15 @@ export default function Header() {
         <Image src="/logo.svg" alt="Engin Deniz Logo" width={160} height={75} priority className="mb-12" />
 
         <nav className="flex flex-col items-center space-y-6 text-xl font-medium text-black">
-          <a href="#" className="text-[#c31524] italic" onClick={() => setIsMobileMenuOpen(false)}>Law Firm</a>
-          <a href="#" className="hover:text-[#c31524] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Team</a>
-          <a href="#" className="hover:text-[#c31524] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Real Estate Law</a>
-          <a href="#" className="hover:text-[#c31524] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Panorama</a>
-          <a href="#" className="hover:text-[#c31524] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Anniversary</a>
-          <a href="#" className="hover:text-[#c31524] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+          <a href="/" className={pathname === "/" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Law Firm</a>
+          <a href="/team" className={pathname === "/team" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Team</a>
+          <a href="#" className={pathname === "/real-estate" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Real Estate Law</a>
+          <a href="#" className={pathname === "/panorama" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Panorama</a>
+          <a href="#" className={pathname === "/anniversary" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Anniversary</a>
+          <a href="#" className={pathname === "/contact" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
         </nav>
 
-        <button className="mt-10 bg-[#d71921] text-white px-10 py-3 rounded-full font-medium hover:bg-red-800 transition-colors">
+        <button className="font-display mt-10 bg-[#d71921] text-white px-10 py-3 rounded-full font-semibold hover:bg-red-800 transition-colors text-[16px]">
           Hire Us
         </button>
 

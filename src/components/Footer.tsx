@@ -30,7 +30,7 @@ export default function Footer() {
             <h4 className="text-black font-sans font-semibold text-lg mb-6 tracking-wide">Quick Links</h4>
             <ul className="flex flex-col space-y-3">
               <li><Link href="#" className="text-[#5a6a7e] hover:text-[#d71921] transition-colors font-serif">Law Firm</Link></li>
-              <li><Link href="#" className="text-[#5a6a7e] hover:text-[#d71921] transition-colors font-serif">Team</Link></li>
+              <li><Link href="/team" className="text-[#5a6a7e] hover:text-[#d71921] transition-colors font-serif">Team</Link></li>
               <li><Link href="#" className="text-[#5a6a7e] hover:text-[#d71921] transition-colors font-serif">Real Estate Law</Link></li>
               <li><Link href="#" className="text-[#5a6a7e] hover:text-[#d71921] transition-colors font-serif">Anniversary</Link></li>
             </ul>

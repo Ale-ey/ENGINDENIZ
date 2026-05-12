@@ -305,7 +305,7 @@ export default async function Home() {
               </div>
             )}
             
-            <a href="#" className="inline-flex items-center px-8 py-2.5 border border-black rounded-full text-[15px] font-medium text-black hover:bg-[#d71921] hover:text-white transition-colors self-start hover:border-[#d71921]">
+            <a href="#" className="font-display inline-flex items-center px-8 py-2.5 border border-black rounded-full text-[15px] font-semibold text-black hover:bg-[#d71921] hover:text-white transition-colors self-start hover:border-[#d71921]">
               Read More
             </a>
           </FadeIn>
@@ -363,7 +363,7 @@ export default async function Home() {
               </div>
             )}
             
-            <a href="#" className="inline-flex items-center px-8 py-2.5 border border-black rounded-full text-[15px] font-medium text-black hover:bg-[#d71921] hover:text-white transition-colors self-start hover:border-[#d71921]">
+            <a href="#" className="font-display inline-flex items-center px-8 py-2.5 border border-black rounded-full text-[15px] font-semibold text-black hover:bg-[#d71921] hover:text-white transition-colors self-start hover:border-[#d71921]">
               Read More
             </a>
           </FadeIn>
@@ -386,7 +386,7 @@ export default async function Home() {
               <FadeIn key={index} delay={index * 0.1}>
                 <div className="border-b border-gray-200 py-10 flex flex-col md:flex-row gap-6 md:gap-16 group hover:bg-[#fafafa] transition-colors -mx-6 px-6 sm:-mx-8 sm:px-8 rounded-xl cursor-pointer">
                   <div className="md:w-1/3 shrink-0">
-                    <h3 className="text-xl lg:text-2xl font-bold font-playfair text-black group-hover:text-[#d71921] transition-colors mt-1">
+                    <h3 className="text-xl lg:text-2xl font-bold font-sans text-black group-hover:text-[#d71921] transition-colors mt-1">
                       {item.title}
                     </h3>
                   </div>
@@ -394,7 +394,7 @@ export default async function Home() {
                     <p className="text-[#5a6a7e] font-serif leading-relaxed mb-6 whitespace-pre-wrap text-[15px]">
                       {item.desc}
                     </p>
-                    <a href="#" className="text-sm font-bold text-black group-hover:text-[#d71921] transition-colors flex items-center">
+                    <a href="#" className="font-display text-[16px] font-semibold text-black group-hover:text-[#d71921] transition-colors flex items-center">
                       Read more
                       <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                     </a>

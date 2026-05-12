@@ -64,3 +64,39 @@ export async function getLawFirmPage() {
 
   return data?.pages?.nodes[0] || null;
 }
+
+export async function getTeamPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {search: "Team"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            focusKeywords
+            canonicalUrl
+            robots
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.pages?.nodes[0] || null;
+}
