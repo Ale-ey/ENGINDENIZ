@@ -8,6 +8,9 @@ import Header from "@/components/Header";
 import HeroSlider from "@/components/HeroSlider";
 import { FadeIn } from "@/components/FadeIn";
 import TestimonialSlider from "@/components/TestimonialSlider";
+
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getLawFirmPage();
   if (!pageData || !pageData.seo) return {};
