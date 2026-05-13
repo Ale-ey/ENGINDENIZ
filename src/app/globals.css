@@ -17,3 +17,21 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Styles for parsed WordPress HTML */
+.wp-parsed-content a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.wp-parsed-content a:hover {
+  color: #d71921;
+}
+
+.wp-parsed-content strong,
+.wp-parsed-content b {
+  font-weight: 600;
+  color: #000;
+}

@@ -78,19 +78,19 @@ export default function Header() {
                 Team
                 <span className={getSpanClasses("/team")}></span>
               </a>
-              <a href="#" className={getLinkClasses("/real-estate")}>
+              <a href="/real-estate-law" className={getLinkClasses("/real-estate-law")}>
                 Real Estate Law
-                <span className={getSpanClasses("/real-estate")}></span>
+                <span className={getSpanClasses("/real-estate-law")}></span>
               </a>
-              <a href="#" className={getLinkClasses("/panorama")}>
+              <a href="/panorama" className={getLinkClasses("/panorama")}>
                 Panorama
                 <span className={getSpanClasses("/panorama")}></span>
               </a>
-              <a href="#" className={getLinkClasses("/anniversary")}>
+              <a href="/anniversary" className={getLinkClasses("/anniversary")}>
                 Anniversary
                 <span className={getSpanClasses("/anniversary")}></span>
               </a>
-              <a href="#" className={getLinkClasses("/contact")}>
+              <a href="/contact" className={getLinkClasses("/contact")}>
                 Contact
                 <span className={getSpanClasses("/contact")}></span>
               </a>
@@ -130,10 +130,10 @@ export default function Header() {
         <nav className="flex flex-col items-center space-y-6 text-xl font-medium text-black">
           <a href="/" className={pathname === "/" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Law Firm</a>
           <a href="/team" className={pathname === "/team" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Team</a>
-          <a href="#" className={pathname === "/real-estate" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Real Estate Law</a>
-          <a href="#" className={pathname === "/panorama" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Panorama</a>
-          <a href="#" className={pathname === "/anniversary" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Anniversary</a>
-          <a href="#" className={pathname === "/contact" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+          <a href="/real-estate-law" className={pathname === "/real-estate-law" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Real Estate Law</a>
+          <a href="/panorama" className={pathname === "/panorama" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Panorama</a>
+          <a href="/anniversary" className={pathname === "/anniversary" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Anniversary</a>
+          <a href="/contact" className={pathname === "/contact" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
         </nav>
 
         <button className="font-display mt-10 bg-[#d71921] text-white px-10 py-3 rounded-full font-semibold hover:bg-red-800 transition-colors text-[16px]">

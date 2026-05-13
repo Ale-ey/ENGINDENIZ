@@ -100,3 +100,147 @@ export async function getTeamPage() {
 
   return data?.pages?.nodes[0] || null;
 }
+
+export async function getContactPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {search: "Contact"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            focusKeywords
+            canonicalUrl
+            robots
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getRealEstateLawPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {search: "Real estate law"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            focusKeywords
+            canonicalUrl
+            robots
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getAnniversaryPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {search: "Anniversary"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            focusKeywords
+            canonicalUrl
+            robots
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getPanoramaPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {search: "Panaroma"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            focusKeywords
+            canonicalUrl
+            robots
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.pages?.nodes[0] || null;
+}

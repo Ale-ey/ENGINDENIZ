@@ -5,6 +5,7 @@ import * as cheerio from "cheerio";
 import Image from "next/image";
 import Header from "@/components/Header";
 import { FadeIn } from "@/components/FadeIn";
+import parse from "html-react-parser";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +78,7 @@ export default async function TeamPage() {
 
     // 1. Get subtitle (first p)
     if (current.is("p")) {
-      subtitle = current.text().trim();
+      subtitle = current.html()?.trim() || "";
       current = current.next();
     }
 
@@ -94,26 +95,27 @@ export default async function TeamPage() {
       // Find List (Expertise)
       else if (current.is("ul")) {
         current.find("li").each((_, li) => {
-          expertiseList.push($(li).text().trim());
+          expertiseList.push($(li).html()?.trim() || "");
         });
       }
       // Find Paragraphs
       else if (current.is("p")) {
         const text = current.text().trim();
+        const html = current.html()?.trim() || "";
         if (text) {
           // If the paragraph comes right before a UL, it might be the expertise title (e.g. "Lawyer")
           if (current.next().is("ul")) {
-            expertiseTitle = text;
+            expertiseTitle = html;
           } else if (!intro && current.find("strong, b").length > 0) {
-            intro = text;
+            intro = html;
           } else {
-            bodyParas.push(text);
+            bodyParas.push(html);
           }
         }
       }
       // Or headers for expertise title
       else if (current.is("h3, h4, h5, h6")) {
-        expertiseTitle = current.text().trim();
+        expertiseTitle = current.html()?.trim() || "";
       }
 
       current = current.next();
@@ -165,29 +167,29 @@ export default async function TeamPage() {
                 <FadeIn direction={isTextFirst ? "right" : "left"} delay={0.1} className="w-full flex flex-col">
                   <h2 className="text-3xl lg:text-4xl font-sans font-medium text-black mb-1">{member.name}</h2>
                   {member.subtitle && (
-                    <p className="text-[#d71921] font-sans text-sm mb-12">{member.subtitle}</p>
+                    <div className="text-[#d71921] font-sans text-sm mb-12 wp-parsed-content">{parse(member.subtitle)}</div>
                   )}
 
                   {member.intro && (
-                    <p className="font-sans font-medium text-black text-[17px] leading-relaxed mb-8">
-                      {member.intro}
-                    </p>
+                    <div className="font-sans font-medium text-black text-[17px] leading-relaxed mb-8 wp-parsed-content">
+                      {parse(member.intro)}
+                    </div>
                   )}
 
                   {member.bodyParas.map((para: string, i: number) => (
-                    <p key={i} className="text-[#5a6a7e] font-serif text-[15px] leading-loose mb-6">
-                      {para}
-                    </p>
+                    <div key={i} className="text-[#5a6a7e] font-sans text-[15px] leading-loose mb-6 wp-parsed-content font-light">
+                      {parse(para)}
+                    </div>
                   ))}
 
                   {member.expertiseTitle && (
-                    <h4 className="font-sans font-medium text-black text-lg mt-8 mb-4">{member.expertiseTitle}</h4>
+                    <h4 className="font-sans font-medium text-black text-lg mt-8 mb-4 wp-parsed-content">{parse(member.expertiseTitle)}</h4>
                   )}
 
                   {member.expertiseList.length > 0 && (
-                    <ul className="text-[#5a6a7e] font-serif text-[14px] leading-loose list-disc pl-5">
+                    <ul className="text-[#5a6a7e] font-sans text-[14px] leading-loose list-disc pl-5 wp-parsed-content font-light">
                       {member.expertiseList.map((item: string, i: number) => (
-                        <li key={i}>{item}</li>
+                        <li key={i}>{parse(item)}</li>
                       ))}
                     </ul>
                   )}
