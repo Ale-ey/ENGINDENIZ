@@ -11,9 +11,17 @@ export async function fetchGraphQL(query: string, variables = {}) {
         query,
         variables,
       }),
-      // Disable caching to see live WordPress updates immediately
-      cache: "no-store",
+      // Reduced ISR caching from 15s to 1s to make WordPress changes appear instantly
+      // while still providing a tiny buffer against SiteGround Anti-Bot limits
+      next: { revalidate: 1 },
     });
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await res.text();
+      console.error("Non-JSON response received:", text.substring(0, 500));
+      throw new Error(`Expected JSON but got HTML. Status: ${res.status}`);
+    }
 
     const json = await res.json();
     
@@ -21,6 +29,26 @@ export async function fetchGraphQL(query: string, variables = {}) {
       console.error(json.errors);
       throw new Error("Failed to fetch API");
     }
+
+    // Recursively clean up " - Addidas" from SEO titles and descriptions
+    const cleanAddidas = (obj: any) => {
+      if (!obj || typeof obj !== "object") return;
+      
+      if (obj.seo && typeof obj.seo.title === "string") {
+        obj.seo.title = obj.seo.title.replace(/\s*-\s*Addidas/gi, "").trim();
+      }
+      if (obj.seo && obj.seo.openGraph && typeof obj.seo.openGraph.title === "string") {
+        obj.seo.openGraph.title = obj.seo.openGraph.title.replace(/\s*-\s*Addidas/gi, "").trim();
+      }
+
+      Object.values(obj).forEach((val) => {
+        if (val && typeof val === "object") {
+          cleanAddidas(val);
+        }
+      });
+    };
+
+    cleanAddidas(json.data);
 
     return json.data;
   } catch (error) {
@@ -242,5 +270,102 @@ export async function getPanoramaPage() {
     }
   `);
 
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getImprintPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {name: "imprint"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          seo {
+            title
+            description
+            canonicalUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getPrivacyPolicyPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {name: "privacy-policy"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          seo {
+            title
+            description
+            canonicalUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getTermsAndConditionsPage() {
+  const data = await fetchGraphQL(`
+    query {
+      pages(where: {name: "terms-and-conditions"}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          seo {
+            title
+            description
+            canonicalUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.pages?.nodes[0] || null;
+}
+
+export async function getPageBySlug(slug: string) {
+  const data = await fetchGraphQL(`
+    query GetPageBySlug($name: String!) {
+      pages(where: {name: $name}) {
+        nodes {
+          id
+          title
+          slug
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          seo {
+            title
+            description
+            canonicalUrl
+            openGraph {
+              title
+              description
+              image {
+                secureUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `, { name: slug });
+  
   return data?.pages?.nodes[0] || null;
 }

@@ -8,8 +8,14 @@ const crimsonText = Crimson_Text({ subsets: ["latin"], weight: ["400", "600", "7
 const raleway = Raleway({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-raleway" });
 
 export const metadata: Metadata = {
-  title: "Engin Deniz Law Firm",
+  title: {
+    template: "%s | ENGINDENIZ",
+    default: "ENGINDENIZ",
+  },
   description: "Leading specialist law firm for real estate",
+  icons: {
+    icon: "/logo2.png",
+  },
 };
 
 export default function RootLayout({

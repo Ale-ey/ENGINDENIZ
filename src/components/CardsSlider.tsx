@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface Card {
+export interface Card {
   title: string;
   imageSrc: string;
+  href?: string;
 }
 
 export default function CardsSlider({ cards }: { cards: Card[] }) {
@@ -88,19 +90,19 @@ export default function CardsSlider({ cards }: { cards: Card[] }) {
                 {/* Text Container */}
                 <div className="w-full md:w-1/2 bg-[#fae8e8] p-10 lg:p-14 flex flex-col justify-between">
                   <div>
-                    <span className="text-[#d71921] text-sm font-semibold tracking-wide uppercase">24 Sep 2020</span>
-                    <h3 className="text-2xl lg:text-3xl font-sans font-semibold text-black mt-6 mb-8 leading-snug">
+                    <h3 className="text-2xl lg:text-3xl font-sans font-semibold text-black leading-snug">
                       {card.title}
                     </h3>
-                    <div className="w-10 h-10 rounded-full border border-black flex items-center justify-center hover:bg-[#d71921] hover:border-[#d71921] hover:text-white transition-colors cursor-pointer">
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
                   </div>
                   
-                  <div className="mt-12 text-[13px] tracking-wide">
-                    <span className="text-[#5a6a7e] block mb-1">Law Institutions</span>
-                    <span className="text-black font-semibold">by Ellington Chrissie</span>
-                  </div>
+                  <Link href={card.href || "#"} className="mt-12 flex items-center gap-4 cursor-pointer group">
+                    <div className="w-10 h-10 rounded-full border border-black flex items-center justify-center group-hover:bg-[#d71921] group-hover:border-[#d71921] group-hover:text-white transition-colors shrink-0">
+                      <ChevronRight className="w-5 h-5" />
+                    </div>
+                    <span className="text-black font-semibold text-[13px] uppercase tracking-wider group-hover:text-[#d71921] transition-colors">
+                      Read more
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>

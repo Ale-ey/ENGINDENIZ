@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Phone, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -95,9 +96,9 @@ export default function Header() {
                 <span className={getSpanClasses("/contact")}></span>
               </a>
             </nav>
-            <button className="font-display hidden md:block bg-[#d71921] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-red-800 transition-colors text-[15px]">
+            <Link href="/contact" className="font-display hidden md:block bg-[#e40037] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-red-800 transition-colors text-[15px]">
               Hire Us
-            </button>
+            </Link>
 
             {/* Mobile Hamburger Icon */}
             <button 
@@ -136,9 +137,9 @@ export default function Header() {
           <a href="/contact" className={pathname === "/contact" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
         </nav>
 
-        <button className="font-display mt-10 bg-[#d71921] text-white px-10 py-3 rounded-full font-semibold hover:bg-red-800 transition-colors text-[16px]">
+        <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="font-display mt-10 bg-[#e40037] text-white px-10 py-3 rounded-full font-semibold hover:bg-red-800 transition-colors text-[16px] text-center">
           Hire Us
-        </button>
+        </Link>
 
         <div className="mt-auto pb-10 flex flex-col items-center space-y-4">
           <div className="flex items-center space-x-2 text-sm text-gray-600">

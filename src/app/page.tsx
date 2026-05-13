@@ -4,6 +4,7 @@ import { getLawFirmPage } from "@/lib/graphql";
 import * as cheerio from "cheerio";
 import { Gavel, Globe, Building2, Handshake, ChevronRight, Phone } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/Header";
 import HeroSlider from "@/components/HeroSlider";
 import { FadeIn } from "@/components/FadeIn";
@@ -382,26 +383,31 @@ export default async function Home() {
 
           {/* List Content */}
           <div className="flex flex-col">
-            {expertiseItems.map((item, index) => (
-              <FadeIn key={index} delay={index * 0.1}>
-                <div className="border-b border-gray-200 py-10 flex flex-col md:flex-row gap-6 md:gap-16 group hover:bg-[#fafafa] transition-colors -mx-6 px-6 sm:-mx-8 sm:px-8 rounded-xl cursor-pointer">
-                  <div className="md:w-1/3 shrink-0">
-                    <h3 className="text-xl lg:text-2xl font-bold font-sans text-black group-hover:text-[#d71921] transition-colors mt-1">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <div className="md:w-2/3 flex flex-col items-start">
-                    <p className="text-[#5a6a7e] font-serif leading-relaxed mb-6 whitespace-pre-wrap text-[15px]">
-                      {item.desc}
-                    </p>
-                    <a href="#" className="font-display text-[16px] font-semibold text-black group-hover:text-[#d71921] transition-colors flex items-center">
-                      Read more
-                      <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                    </a>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
+            {expertiseItems.map((item, index) => {
+              const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+              return (
+                <FadeIn key={index} delay={index * 0.1}>
+                  <Link href={`/${slug}`} className="block border-b border-gray-200 py-10 group hover:bg-[#fafafa] transition-colors -mx-6 px-6 sm:-mx-8 sm:px-8 rounded-xl cursor-pointer">
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-16">
+                      <div className="md:w-1/3 shrink-0">
+                        <h3 className="text-xl lg:text-2xl font-bold font-sans text-black group-hover:text-[#d71921] transition-colors mt-1">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <div className="md:w-2/3 flex flex-col items-start">
+                        <p className="text-[#5a6a7e] font-serif leading-relaxed mb-6 whitespace-pre-wrap text-[15px]">
+                          {item.desc}
+                        </p>
+                        <div className="font-display text-[16px] font-semibold text-black group-hover:text-[#d71921] transition-colors flex items-center">
+                          Read more
+                          <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </FadeIn>
+              );
+            })}
           </div>
         </section>
       )}

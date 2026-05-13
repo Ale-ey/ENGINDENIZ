@@ -48,7 +48,7 @@ export default async function RealEstateLaw() {
   const introHeadingText = $("h2").first().text();
   
   // Extract pairs of h2 and figure
-  const cards: { title: string; imageSrc: string }[] = [];
+  const cards: { title: string; imageSrc: string; href: string }[] = [];
   
   $("h2").each((i, el) => {
     if (i === 0) return; // Skip the first one as it's the intro text
@@ -60,7 +60,8 @@ export default async function RealEstateLaw() {
     }
     
     if (title && imageSrc) {
-      cards.push({ title, imageSrc });
+      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      cards.push({ title, imageSrc, href: `/${slug}` });
     }
   });
 
