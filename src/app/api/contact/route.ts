@@ -2,8 +2,36 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") || "";
+    
+    // Check if it's a Fluent Forms submission (x-www-form-urlencoded)
+    if (contentType.includes("application/x-www-form-urlencoded")) {
+      const bodyText = await request.text();
+      
+      const response = await fetch("https://silvioh22.sg-host.com/wp-admin/admin-ajax.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+          "Origin": "https://engin-deniz.com",
+          "Referer": "https://engin-deniz.com/contact",
+        },
+        body: bodyText,
+      });
 
+      const data = await response.json();
+
+      if (response.ok && (data.success || data.insert_id)) {
+        return NextResponse.json({ success: true, ...data });
+      } else {
+        console.error("Fluent Forms Error:", data);
+        return NextResponse.json({ success: false, error: data.errors || "Failed to submit form" }, { status: 400 });
+      }
+    }
+
+    // Fallback for the old JSON FormSubmit.co method (just in case)
+    const body = await request.json();
     const response = await fetch("https://formsubmit.co/ajax/lawfirm@engin-deniz.com", {
       method: "POST",
       headers: {

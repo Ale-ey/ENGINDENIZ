@@ -74,18 +74,30 @@ export default async function Home() {
   const introDesc = introHeading.nextUntil("h2", "p").first().text() || $("p").first().text();
 
   // Extract Advisory Areas
-  const advisoryHeading = h2s.filter((i, el) => $(el).text().trim().toLowerCase() === "advisory areas").first();
+  // Robust matching: find the heading by structure (followed by numbered list items) or fallback to text includes "advisory"
+  const advisoryHeading = h2s.filter((i, el) => {
+    const nextParas = $(el).nextUntil("h2", "p").map((_, child) => $(child).text()).get();
+    let matchCount = 0;
+    nextParas.forEach(p => {
+      if (p.trim().match(/^(\d{1,2})[\.\-\s]+(.+)$/)) matchCount++;
+    });
+    return matchCount >= 2 || $(el).text().toLowerCase().includes("advisory");
+  }).first();
+
+  const advisoryTitle = advisoryHeading.length > 0 ? advisoryHeading.text() : "Advisory areas";
   const advisoryItems: { num: string; title: string; }[] = [];
   const leftoverParas: string[] = []; // Paragraphs that belong to Quality if Quality H2 is missing
 
   if (advisoryHeading.length) {
     const allParas = advisoryHeading.nextUntil("h2", "p").map((_, el) => $(el).text()).get();
     allParas.forEach(p => {
-      const match = p.match(/^(\d{2})\s+(.+)$/);
+      const match = p.trim().match(/^(\d{1,2})[\.\-\s]+(.+)$/);
       if (match) {
+        let numStr = match[1];
+        if (numStr.length === 1) numStr = "0" + numStr; // Normalize to 01, 02
         advisoryItems.push({
-          num: match[1],
-          title: match[2]
+          num: numStr,
+          title: match[2].trim()
         });
       } else {
         // Not an advisory area, so it's a regular paragraph (likely the Quality text)
@@ -97,7 +109,7 @@ export default async function Home() {
   }
 
   // Find the Quality section (Pink)
-  const qualityHeading = h2s.filter((i, el) => $(el).text().trim().toLowerCase() === "quality").first();
+  console.log('ADVISORY ITEMS:', advisoryItems); const qualityHeading = h2s.filter((i, el) => $(el).text().trim().toLowerCase() === "quality").first();
   const qualityTitle = qualityHeading.text() || "Quality";
   let qualityParas = qualityHeading.length > 0 
     ? qualityHeading.nextUntil("h2", "p").map((_, el) => $(el).text()).get() 
@@ -120,6 +132,12 @@ export default async function Home() {
   let realEstateImageSrc = realEstateHeading.nextUntil("h2", "figure").find("img").attr("src") || galleryImages[1] || "";
   if (realEstateImageSrc) realEstateImageSrc = realEstateImageSrc.replace(/-\d+x\d+(?=\.[a-zA-Z]+$)/, '');
 
+  const expertiseHeading = h2s.filter((i, el) => $(el).text().toLowerCase().includes("expertise")).first();
+  const expertiseSectionTitle = expertiseHeading.length > 0 ? expertiseHeading.text() : "Expertise";
+
+  const clientsSayHeading = h2s.filter((i, el) => $(el).text().toLowerCase().includes("client")).first();
+  const clientsSayTitle = clientsSayHeading.length > 0 ? clientsSayHeading.text() : "Our clients say";
+
   // Expertise List Sections
   const expertiseItems: { title: string; desc: string; }[] = [];
   let isExpertiseSection = false;
@@ -128,18 +146,19 @@ export default async function Home() {
     const text = $(el).text().trim();
     const pText = $(el).next("p").text().toLowerCase();
     
-    if (text.toLowerCase().includes("property management")) {
+    if (text === expertiseSectionTitle) {
       isExpertiseSection = true;
+      return; // Skip adding the title itself
     }
     
     // Stop if we hit history, contact, or a team member (identified by lawyer/partner subtitle)
     if (
+      text === clientsSayTitle ||
       text.toLowerCase().includes("history") || 
       text.toLowerCase().includes("contact") || 
       text.toLowerCase().includes("footer") ||
       pText.includes("lawyer") || 
-      pText.includes("partner") ||
-      text.toLowerCase().includes("our clients say")
+      pText.includes("partner")
     ) {
       isExpertiseSection = false;
     }
@@ -263,7 +282,7 @@ export default async function Home() {
           <div className="max-w-7xl mx-auto w-full">
             <div className="flex justify-between items-end mb-8 border-b border-gray-200 pb-6">
               <h2 className="font-sans text-4xl lg:text-5xl font-medium text-black tracking-tight">
-                Advisory areas
+                {advisoryTitle}
               </h2>
               <a href="#" className="hidden md:flex items-center text-sm font-semibold text-black hover:text-[#d71921] transition-colors group">
                 See More <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -377,7 +396,7 @@ export default async function Home() {
           {/* Section Header */}
           <div className="flex justify-between items-end mb-4 border-b border-gray-200 pb-8">
             <h2 className="font-sans text-4xl lg:text-5xl font-medium text-black tracking-tight">
-              Expertise
+              {expertiseSectionTitle}
             </h2>
           </div>
 
@@ -471,7 +490,7 @@ export default async function Home() {
         <section className="py-24 px-4 bg-white border-t border-gray-100">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-sans font-medium text-black mb-8">
-              Our clients say
+              {clientsSayTitle}
             </h2>
             <div className="w-full h-px bg-[#e5e7eb] mb-12"></div>
             <TestimonialSlider testimonials={testimonials} />

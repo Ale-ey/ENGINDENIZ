@@ -61,6 +61,13 @@ export default async function ContactPage() {
   let imageSrc = pageData.featuredImage?.node?.sourceUrl || $("img").first().attr("src") || "";
   if (imageSrc) imageSrc = imageSrc.replace(/-\d+x\d+(?=\.[a-zA-Z]+$)/, '');
 
+  // Extract Fluent Form HTML
+  let fluentFormHtml = "";
+  const formElement = $(".fluentform");
+  if (formElement.length) {
+    fluentFormHtml = formElement.prop("outerHTML") || "";
+  }
+
   return (
     <main className="min-h-screen bg-white selection:bg-[#D71921] selection:text-white flex flex-col">
       <Header />
@@ -82,7 +89,7 @@ export default async function ContactPage() {
               </div>
             ))}
 
-            <ContactForm />
+            <ContactForm formHtml={fluentFormHtml} />
 
           </FadeIn>
         </div>

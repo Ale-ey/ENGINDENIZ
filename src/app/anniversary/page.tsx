@@ -87,7 +87,7 @@ export default async function Anniversary() {
         <div className="max-w-4xl mx-auto">
           <FadeIn>
             <h1 className="text-4xl lg:text-5xl font-sans font-medium text-black tracking-tight mb-8">
-              60 Years of ENGIN DENIZ
+              {pageData.title}
             </h1>
             <p className="text-[#5a6a7e] text-lg lg:text-xl leading-relaxed font-serif italic">
               "{introText}"
