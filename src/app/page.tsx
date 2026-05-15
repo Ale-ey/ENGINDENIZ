@@ -506,9 +506,9 @@ export default async function Home() {
               {ctaText}
             </h2>
             <div className="md:pr-20">
-              <a href="#" className="inline-flex items-center justify-center px-10 py-3 rounded-full border border-black text-black font-sans font-medium hover:bg-[#d71921] hover:text-white transition-colors hover:border-[#d71921]">
+              <Link href="/contact" className="inline-flex items-center justify-center px-10 py-3 rounded-full border border-black text-black font-sans font-medium hover:bg-[#d71921] hover:text-white transition-colors hover:border-[#d71921]">
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
         </section>
