@@ -24,9 +24,9 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-50 bg-white shadow-sm flex h-[110px] md:h-[120px] w-full">
         {/* Left Side (Logo Box) */}
-        <div className="hidden md:flex w-[260px] lg:w-[320px] bg-white border-r border-gray-100 items-center justify-center shrink-0">
+        <Link href="/" className="hidden md:flex w-[260px] lg:w-[320px] bg-white border-r border-gray-100 items-center justify-center shrink-0">
           <Image src="/logo.svg" alt="Engin Deniz Logo" width={180} height={84} priority />
-        </div>
+        </Link>
 
         {/* Right Side */}
         <div className="flex-1 flex flex-col">
@@ -67,9 +67,9 @@ export default function Header() {
 
           {/* Bottom Nav Bar */}
           <div className="flex-[1.2] flex items-center justify-between px-6 md:px-8 h-full pb-2 md:pb-0">
-            <div className="md:hidden flex items-center">
+            <Link href="/" className="md:hidden flex items-center">
               <Image src="/logo.svg" alt="Engin Deniz Logo" width={120} height={56} priority />
-            </div>
+            </Link>
             <nav className="hidden md:flex items-center space-x-8 text-[15px] font-medium text-black">
               <a href="/" className={getLinkClasses("/")}>
                 Law Firm
@@ -126,7 +126,9 @@ export default function Header() {
           <X className="w-8 h-8" />
         </button>
 
-        <Image src="/logo.svg" alt="Engin Deniz Logo" width={160} height={75} priority className="mb-12" />
+        <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+          <Image src="/logo.svg" alt="Engin Deniz Logo" width={160} height={75} priority className="mb-12" />
+        </Link>
 
         <nav className="flex flex-col items-center space-y-6 text-xl font-medium text-black">
           <a href="/" className={pathname === "/" ? "text-[#c31524] italic" : "hover:text-[#c31524] transition-colors"} onClick={() => setIsMobileMenuOpen(false)}>Law Firm</a>
